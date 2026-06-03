@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fogão da Roça — Comida Mineira em Londrina</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=Crimson+Pro:wght@300;400;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --terra: #3D1F0D;
+    --brasa: #8B3A10;
+    --ouro: #C8922A;
+    --ouro-claro: #E8B84B;
+    --creme: #F5EDD8;
+    --fumo: #1A0F05;
+    --lenha: #6B3A1F;
+    --bg: #1C0E06;
+  }
+
+  html, body {
+    min-height: 100%;
+    background: var(--bg);
+    font-family: 'Crimson Pro', Georgia, serif;
+    color: var(--creme);
+    overflow-x: hidden;
+  }
+
+  /* FOGO ANIMADO NO FUNDO */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 60% 40% at 50% 100%, rgba(139,58,16,0.35) 0%, transparent 70%),
+      radial-gradient(ellipse 80% 60% at 30% 90%, rgba(200,146,42,0.12) 0%, transparent 60%),
+      radial-gradient(ellipse 80% 60% at 70% 95%, rgba(200,146,42,0.10) 0%, transparent 60%);
+    z-index: 0;
+    pointer-events: none;
+    animation: fogueira 4s ease-in-out infinite alternate;
+  }
+
+  @keyframes fogueira {
+    0%   { opacity: 0.7; transform: scaleY(1); }
+    100% { opacity: 1;   transform: scaleY(1.04); }
+  }
+
+  /* TEXTURA GRANULADA */
+  body::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.06'/%3E%3C/svg%3E");
+    opacity: 0.4;
+    z-index: 1;
+    pointer-events: none;
+  }
+
+  .container {
+    position: relative;
+    z-index: 2;
+    max-width: 420px;
+    margin: 0 auto;
+    padding: 48px 24px 64px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0;
+  }
+
+  /* LOGO AREA */
+  .logo-wrap {
+    position: relative;
+    margin-bottom: 28px;
+    animation: surgir 0.8s cubic-bezier(0.22,1,0.36,1) both;
+  }
+
+  @keyframes surgir {
+    from { opacity: 0; transform: translateY(24px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .logo-ring {
+    width: 108px;
+    height: 108px;
+    border-radius: 50%;
+    border: 2.5px solid var(--ouro);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: radial-gradient(circle at 40% 35%, #4A2010 0%, #1C0E06 100%);
+    box-shadow:
+      0 0 0 6px rgba(200,146,42,0.10),
+      0 0 40px rgba(139,58,16,0.5),
+      inset 0 0 20px rgba(0,0,0,0.4);
+    overflow: hidden;
+  }
+
+  .logo-emoji {
+    font-size: 48px;
+    filter: drop-shadow(0 2px 8px rgba(200,146,42,0.6));
+  }
+
+  /* NOME E TAGLINE */
+  .brand-name {
+    font-family: 'Playfair Display', serif;
+    font-weight: 900;
+    font-size: 2.4rem;
+    letter-spacing: -0.01em;
+    color: var(--creme);
+    text-align: center;
+    line-height: 1.05;
+    margin-bottom: 6px;
+    animation: surgir 0.8s 0.1s cubic-bezier(0.22,1,0.36,1) both;
+  }
+
+  .brand-sub {
+    font-family: 'Crimson Pro', serif;
+    font-size: 0.95rem;
+    font-weight: 300;
+    color: var(--ouro-claro);
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    text-align: center;
+    margin-bottom: 6px;
+    animation: surgir 0.8s 0.15s cubic-bezier(0.22,1,0.36,1) both;
+  }
+
+  .brand-desc {
+    font-size: 1rem;
+    color: rgba(245,237,216,0.65);
+    text-align: center;
+    line-height: 1.55;
+    max-width: 300px;
+    margin: 0 auto 36px;
+    animation: surgir 0.8s 0.2s cubic-bezier(0.22,1,0.36,1) both;
+  }
+
+  /* DIVISOR */
+  .divider {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    width: 100%;
+    margin-bottom: 28px;
+    animation: surgir 0.8s 0.25s cubic-bezier(0.22,1,0.36,1) both;
+  }
+  .divider::before, .divider::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(to right, transparent, var(--ouro), transparent);
+    opacity: 0.4;
+  }
+  .divider-icon { font-size: 16px; opacity: 0.7; }
+
+  /* LINKS */
+  .links-list {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .link-btn {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    width: 100%;
+    padding: 16px 20px;
+    border-radius: 12px;
+    text-decoration: none;
+    color: var(--creme);
+    background: rgba(61,31,13,0.55);
+    border: 1px solid rgba(200,146,42,0.22);
+    backdrop-filter: blur(8px);
+    transition: transform 0.2s, background 0.2s, border-color 0.2s, box-shadow 0.2s;
+    overflow: hidden;
+    cursor: pointer;
+  }
+
+  .link-btn::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(200,146,42,0.08) 0%, transparent 60%);
+    opacity: 0;
+    transition: opacity 0.25s;
+  }
+
+  .link-btn:hover {
+    transform: translateY(-2px) scale(1.01);
+    background: rgba(61,31,13,0.8);
+    border-color: rgba(200,146,42,0.55);
+    box-shadow: 0 8px 32px rgba(139,58,16,0.35), 0 0 0 1px rgba(200,146,42,0.15);
+  }
+  .link-btn:hover::before { opacity: 1; }
+  .link-btn:active { transform: scale(0.98); }
+
+  .link-btn.primary {
+    background: linear-gradient(135deg, #5A2A0A 0%, #3D1F0D 100%);
+    border-color: rgba(200,146,42,0.45);
+    box-shadow: 0 4px 20px rgba(139,58,16,0.3);
+  }
+  .link-btn.primary:hover {
+    box-shadow: 0 8px 32px rgba(139,58,16,0.5), 0 0 0 1px rgba(200,146,42,0.3);
+  }
+
+  .link-icon {
+    font-size: 22px;
+    flex-shrink: 0;
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+    background: rgba(200,146,42,0.12);
+  }
+
+  .link-text {
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+    flex: 1;
+  }
+  .link-title {
+    font-family: 'Crimson Pro', serif;
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: var(--creme);
+    letter-spacing: 0.01em;
+  }
+  .link-sub {
+    font-size: 0.8rem;
+    color: rgba(245,237,216,0.5);
+    font-weight: 300;
+    letter-spacing: 0.02em;
+  }
+
+  .link-arrow {
+    font-size: 14px;
+    color: var(--ouro);
+    opacity: 0.6;
+    transition: opacity 0.2s, transform 0.2s;
+  }
+  .link-btn:hover .link-arrow {
+    opacity: 1;
+    transform: translateX(3px);
+  }
+
+  /* HORÁRIOS */
+  .horarios {
+    width: 100%;
+    margin-top: 32px;
+    padding: 20px;
+    border-radius: 12px;
+    background: rgba(26,15,5,0.6);
+    border: 1px solid rgba(200,146,42,0.15);
+    animation: surgir 0.8s 0.6s cubic-bezier(0.22,1,0.36,1) both;
+  }
+  .horarios-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: var(--ouro-claro);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    text-align: center;
+    margin-bottom: 14px;
+  }
+  .horario-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 7px 0;
+    border-bottom: 1px solid rgba(200,146,42,0.08);
+  }
+  .horario-row:last-child { border-bottom: none; }
+  .horario-dia {
+    font-size: 0.88rem;
+    color: rgba(245,237,216,0.6);
+    font-weight: 300;
+  }
+  .horario-hora {
+    font-size: 0.88rem;
+    color: var(--creme);
+    font-weight: 600;
+  }
+
+  /* FOOTER */
+  .footer {
+    margin-top: 40px;
+    text-align: center;
+    animation: surgir 0.8s 0.7s cubic-bezier(0.22,1,0.36,1) both;
+  }
+  .footer p {
+    font-size: 0.78rem;
+    color: rgba(245,237,216,0.25);
+    letter-spacing: 0.08em;
+  }
+  .footer .ouro { color: var(--ouro); opacity: 0.5; }
+
+  /* ANIMAÇÕES ESCALONADAS */
+  .link-btn:nth-child(1) { animation: surgir 0.7s 0.3s cubic-bezier(0.22,1,0.36,1) both; }
+  .link-btn:nth-child(2) { animation: surgir 0.7s 0.38s cubic-bezier(0.22,1,0.36,1) both; }
+  .link-btn:nth-child(3) { animation: surgir 0.7s 0.46s cubic-bezier(0.22,1,0.36,1) both; }
+  .link-btn:nth-child(4) { animation: surgir 0.7s 0.54s cubic-bezier(0.22,1,0.36,1) both; }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <div class="logo-wrap">
+    <div class="logo-ring">
+      <span class="logo-emoji">🍲</span>
+    </div>
+  </div>
+
+  <h1 class="brand-name">Fogão da Roça</h1>
+  <p class="brand-sub">Comida Mineira · Londrina</p>
+  <p class="brand-desc">Fogão a lenha, sabor de verdade. Buffet livre com o melhor da cozinha mineira.</p>
+
+  <div class="divider">
+    <span class="divider-icon">🌿</span>
+  </div>
+
+  <div class="links-list">
+
+    <a href="https://wa.me/554337710842" class="link-btn primary" target="_blank" rel="noopener">
+      <div class="link-icon">📲</div>
+      <div class="link-text">
+        <span class="link-title">Reservar Mesa</span>
+        <span class="link-sub">WhatsApp · (43) 3771-0842</span>
+      </div>
+      <span class="link-arrow">→</span>
+    </a>
+
+    <a href="https://maps.app.goo.gl/zfZUbkdgznF12KMM9" class="link-btn" target="_blank" rel="noopener">
+      <div class="link-icon">📍</div>
+      <div class="link-text">
+        <span class="link-title">Como Chegar</span>
+        <span class="link-sub">Ver no Google Maps</span>
+      </div>
+      <span class="link-arrow">→</span>
+    </a>
+
+    <a href="https://www.instagram.com/ofogaodaroca" class="link-btn" target="_blank" rel="noopener">
+      <div class="link-icon">📸</div>
+      <div class="link-text">
+        <span class="link-title">Instagram</span>
+        <span class="link-sub">@ofogaodaroca</span>
+      </div>
+      <span class="link-arrow">→</span>
+    </a>
+
+    <a href="#cardapio" class="link-btn" onclick="alert('Adicione aqui o link do seu cardápio — PDF ou foto!')">
+      <div class="link-icon">🍽️</div>
+      <div class="link-text">
+        <span class="link-title">Ver Cardápio</span>
+        <span class="link-sub">Pratos e buffet</span>
+      </div>
+      <span class="link-arrow">→</span>
+    </a>
+
+  </div>
+
+  <div class="horarios">
+    <p class="horarios-title">Horários</p>
+    <div class="horario-row">
+      <span class="horario-dia">Sexta-feira</span>
+      <span class="horario-hora">A partir das 19h — Porções</span>
+    </div>
+    <div class="horario-row">
+      <span class="horario-dia">Sábado</span>
+      <span class="horario-hora">11h30 — Buffet Livre</span>
+    </div>
+    <div class="horario-row">
+      <span class="horario-dia">Domingo</span>
+      <span class="horario-hora">11h30 — Buffet Livre</span>
+    </div>
+  </div>
+
+  <div class="footer">
+    <p>Feito com <span class="ouro">♥</span> em Londrina · 2026</p>
+  </div>
+
+</div>
+</body>
+</html>
